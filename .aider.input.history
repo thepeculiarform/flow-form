@@ -1,0 +1,99 @@
+
+# 2025-02-25 23:41:21.602685
++n
+
+# 2025-02-25 23:49:58.200513
++y
+
+# 2025-02-25 23:51:14.339850
++n
+
+# 2025-02-28 13:05:20.026837
++what is the most used OCCT tool?
+
+# 2025-02-28 13:08:25.687501
++n
+
+# 2025-02-28 13:08:46.387578
++this is a test
+
+# 2025-02-28 13:09:14.308349
++n
+
+# 2025-02-28 13:20:38.700232
++is there a better way to write the following code?
+
+# 2025-02-28 13:20:41.714988
++def create_sine_wave_on_sphere(sphere_radius=10.0, num_points=100, 
++                              latitude_cycles=2, amplitude=0.5, 
++                              start_longitude=0, end_longitude=math.pi*2):
++    """
++    Creates a sine wave curve on the surface of a sphere.
++    
++    Args:
++        sphere_radius: Radius of the sphere
++        num_points: Number of points to use for the curve
++        latitude_cycles: Number of sine wave cycles around the sphere
++        amplitude: Amplitude of the sine wave in radians (controls height)
++        start_longitude: Starting longitude angle in radians
++        end_longitude: Ending longitude angle in radians
++    
++    Returns:
++        A curve object representing the sine wave on the sphere
++    """
++    # Create the sphere
++    sphere = rg.Sphere(rg.Point3d.Origin, sphere_radius)
++    
++    # Create points for the sine wave
++    points = []
++    
++    for i in range(num_points):
++        # Calculate longitude (position around the sphere)
++        t = float(i) / (num_points - 1)
++        longitude = start_longitude + t * (end_longitude - start_longitude)
++        
++        # Calculate latitude with sine wave variation
++        base_latitude = 0  # Equator
++        latitude = base_latitude + amplitude * math.sin(latitude_cycles * longitude)
++        
++        # Convert spherical coordinates to Cartesian
++        x = sphere_radius * math.cos(latitude) * math.cos(longitude)
++        y = sphere_radius * math.cos(latitude) * math.sin(longitude)
++        z = sphere_radius * math.sin(latitude)
++        
++        point = rg.Point3d(x, y, z)
++        points.append(point)
++    
++    # Create an interpolated curve through the points
++    curve = rg.Curve.CreateInterpolatedCurve(points, 3)
++    
++    # Add objects to Rhino document
++    # if sc.doc:
++    #     # Add sphere
++    #     sphere_id = sc.doc.Objects.AddSphere(sphere)
++        
++    #     # Add curve
++    #     curve_id = sc.doc.Objects.AddCurve(curve)
++        
++    #     sc.doc.Views.Redraw()
++        
++    #     return sphere_id, curve_id
++    
++    return sphere, curve
+
+# 2025-02-28 13:22:47.105552
++n
+
+# 2025-02-28 14:36:01.878346
++what information could be infered from a json object with hundreds of objects that look like thie
+
+# 2025-02-28 14:36:03.611305
++    {
++        "baffle_name": "Centerline A - Baffle 10",
++        "baffle_length": 1460.63,
++        "centerline_id": "0822a39c-b650-4386-9141-13b287df27ad",
++        "baffle_type": "PolyCurve"
++    }
+
+# 2025-02-28 14:36:24.625795
++c
