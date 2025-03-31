@@ -23,8 +23,9 @@ flow_form/
 │   ├── interface/          # Web interface components
 │   │   ├── streamlit_app.py # Streamlit application
 │   │   └── requirements.txt
-│   └── data.json          # Project data storage
-├── resource/             # Material textures and resources
+│   └── data/              # Data storage directory
+│       └── data.json      # Project data storage
+├── resource/              # Material textures and resources
 └── <PROJECT FILE>.3dm     # Rhino Project File
 ```
 
