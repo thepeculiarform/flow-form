@@ -131,4 +131,4 @@ cython_debug/
 
 # Add anything else that's specific to your project below this line
 /content
-.3dm
+*.3dm
