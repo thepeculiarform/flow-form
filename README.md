@@ -25,7 +25,7 @@ flow_form/
 │   │   └── requirements.txt
 │   └── data.json          # Project data storage
 ├── resources/             # Material textures and resources
-└── topo.py               # Topological operations
+└── <PROJECT FILE>.3dm     # Rhino Project File
 ```
 
 ## Features
