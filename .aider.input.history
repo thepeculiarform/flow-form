@@ -118,3 +118,15 @@
 
 # 2025-04-02 23:47:43.549538
 +n
+
+# 2025-04-02 23:52:00.340517
++I want to create a streamlit server that interacts with Rhino8 through the GH Python grasshopper component. I want to have two way binding between streamlit and the component. i want any servers that are run to be started within a GH Python component.
+
+# 2025-04-02 23:53:54.955790
++n
+
+# 2025-04-02 23:53:57.810435
++y
+
+# 2025-04-02 23:54:51.427714
++n
