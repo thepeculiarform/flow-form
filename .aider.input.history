@@ -97,3 +97,24 @@
 
 # 2025-02-28 14:36:24.625795
 +c
+
+# 2025-04-02 22:24:21.933875
++n
+
+# 2025-04-02 23:19:38.849797
++I want to create a streamlit server that talks to Rhino8 through the GH Python component.
+
+# 2025-04-02 23:20:27.403200
++n
+
+# 2025-04-02 23:37:38.854312
++I want to create a Streamlit server that can interact with Rhino8
+
+# 2025-04-02 23:46:43.996760
++I want to create a streamlit server that interacts with Rhino8 through the GH Python grasshopper component. I will be using a Polars dataframe that has rows that represent baffle objects from the baffle class in the Project.py
+
+# 2025-04-02 23:46:52.677940
++y
+
+# 2025-04-02 23:47:43.549538
++n
