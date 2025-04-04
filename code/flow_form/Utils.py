@@ -1,7 +1,13 @@
 import Rhino as rh
 import Rhino.Geometry as rg
 import scriptcontext as sc
+import subprocess
+import psutil
+import os
+import sys  # Add this import
 
+# Set Rhino document context at module level
+sc.doc = rh.RhinoDoc.ActiveDoc
 
 
 alpha = "abcdefghijklmnopqrstuvwxyz"
@@ -24,5 +30,73 @@ def delete_group_items(name):
                 sc.doc.Objects.Delete(item)
 
 
+def manage_streamlit_server(action="start", port=8501):
+    """Manages the Streamlit server process"""
+    streamlit_script = os.path.join(os.path.dirname(__file__), "..", "interface", "app.py")
+    pid_file = os.path.join(os.path.dirname(__file__), "..", "interface", "streamlit.pid")
+    
+    if action == "start":
+        # Check if already running using PID file
+        if os.path.exists(pid_file):
+            with open(pid_file, 'r') as f:
+                try:
+                    pid = int(f.read().strip())
+                    if psutil.pid_exists(pid):
+                        print(f"Streamlit server already running (PID: {pid})")
+                        return True
+                except:
+                    pass
+            
+        # Start new process
+        try:
+            process = subprocess.Popen(
+                ["streamlit", "run", streamlit_script, "--server.port", str(port)],
+                creationflags=subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                shell=True
+            )
+            
+            # Save PID to file
+            with open(pid_file, 'w') as f:
+                f.write(str(process.pid))
+                
+            print(f"Started Streamlit server on port {port} (PID: {process.pid})")
+            return True
+            
+        except Exception as e:
+            print(f"Error starting Streamlit: {e}")
+            return False
+            
+    elif action == "stop":
+        stopped = False
+        # Try to stop using PID file first
+        if os.path.exists(pid_file):
+            with open(pid_file, 'r') as f:
+                try:
+                    pid = int(f.read().strip())
+                    if psutil.pid_exists(pid):
+                        psutil.Process(pid).terminate()
+                        stopped = True
+                except:
+                    pass
+            os.remove(pid_file)
+            
+        # Fallback: stop all Streamlit processes
+        if not stopped:
+            for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+                if 'streamlit' in str(proc.info.get('cmdline', '')):
+                    try:
+                        psutil.Process(proc.info['pid']).terminate()
+                        stopped = True
+                    except:
+                        pass
+                        
+        print("Stopped Streamlit server" if stopped else "No Streamlit server running")
+        return stopped
+
 class DataOutput:
     pass
+
+
+

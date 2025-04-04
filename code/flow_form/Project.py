@@ -28,7 +28,8 @@ class BaffleCenterline:
         self.extend = extend                        # Extension length at connections
         self.break_gap = break_gap                  # Gap between baffle segments
         self.thickness = thickness                  # Thickness of the baffle
-        
+        self._baffle_cache = None 
+
         # Register instance
         BaffleCenterline.instances.append(self)
 
@@ -68,8 +69,15 @@ class BaffleCenterline:
             hanging_points.append(line.PointAtMid)
         return hanging_points
 
+
+
+
     @property
     def baffles(self):
+        # Use cache if available
+        if self._baffle_cache is not None:
+            return self._baffle_cache
+
         # Generate Baffle objects from inset lines
         baffle_listing = []
 
@@ -81,7 +89,14 @@ class BaffleCenterline:
             print(self.centerline.Attributes.GetUserString("depth"))
             baffle = Baffle(f"{self.name} - Baffle {i}", self, baffle_curve)
             baffle_listing.append(baffle)
+
+        # Store in cache
+        self._baffle_cache = baffle_listing
         return baffle_listing
+    
+
+
+
 
     def get_connection_lines(self):
         # Creates lines connecting adjacent baffles with wrap-around for closed centerlines
