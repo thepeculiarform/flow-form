@@ -1,13 +1,31 @@
 
 
 
+### NEXT
+<a name="v0.2.8"></a>
+- Add Streamlit integration with Rhino/Grasshopper
+  - Implement server management system with PID tracking
+  - Add process cleanup utilities
+  - Create JSON-based data exchange
+  - Add interactive baffle data editor
+  - Implement real-time data synchronization
+- Enhance project structure
+  - Add interface directory for Streamlit components
+  - Update Utils.py with server management capabilities
+  - Improve error handling in process management
+- Technical improvements
+  - Add Windows-specific process management
+  - Implement PID-based server state tracking
+  - Add recursive process cleanup
+  - Create file-based IPC implementation
 
+### ### v0.2.6 - 2025-01-09
+// ...existing code...  
 
 ### NEXT
-<a name="v0.2.6"></a>
+<a name="v0.2.7"></a>
 - Add hanging points to Baffles
 - Create hanging point class (typeA, typeB)?
-
 
 
 ### ### v0.2.6 - 2025-01-09
