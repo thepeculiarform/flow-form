@@ -18,7 +18,6 @@ def save_to_json(data, filename):
     with open(filename, 'w') as f:
         json.dump(data, f, indent=4)
 
-
 def delete_group_items(name):
     a_group = sc.doc.Groups.FindName(name)
     if not a_group:
@@ -61,7 +60,7 @@ def manage_streamlit_server(action="start", port=8501):
                         return True
                 except:
                     pass
-            
+
         # Start new process
         try:
             process = subprocess.Popen(
