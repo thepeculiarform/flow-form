@@ -30,6 +30,21 @@ def delete_group_items(name):
                 sc.doc.Objects.Delete(item)
 
 
+def kill_streamlit_process(pid=None):
+    """Force kills Streamlit process and child processes"""
+    try:
+        if pid and psutil.pid_exists(pid):
+            parent = psutil.Process(pid)
+            children = parent.children(recursive=True)
+            for child in children:
+                child.kill()
+            parent.kill()
+            return True
+        return False
+    except:
+        return False
+
+
 def manage_streamlit_server(action="start", port=8501):
     """Manages the Streamlit server process"""
     streamlit_script = os.path.join(os.path.dirname(__file__), "..", "interface", "app.py")
@@ -75,9 +90,7 @@ def manage_streamlit_server(action="start", port=8501):
             with open(pid_file, 'r') as f:
                 try:
                     pid = int(f.read().strip())
-                    if psutil.pid_exists(pid):
-                        psutil.Process(pid).terminate()
-                        stopped = True
+                    stopped = kill_streamlit_process(pid)
                 except:
                     pass
             os.remove(pid_file)
@@ -87,12 +100,12 @@ def manage_streamlit_server(action="start", port=8501):
             for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
                 if 'streamlit' in str(proc.info.get('cmdline', '')):
                     try:
-                        psutil.Process(proc.info['pid']).terminate()
+                        kill_streamlit_process(proc.info['pid'])
                         stopped = True
                     except:
                         pass
                         
-        print("Stopped Streamlit server" if stopped else "No Streamlit server running")
+        print("Stopped Streamlit server" if stopped else "No server running")
         return stopped
 
 class DataOutput:
