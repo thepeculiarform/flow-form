@@ -7,8 +7,16 @@ import json
 import os
 import polars as pl
 from System import Guid
-import Project as pjct
-import Utils as pjct_utils
+
+import flow_form as pjct
+
+
+import sys
+sys.path.append(project_library_path)
+
+import flow_form as pjct
+
+
 
 @dataclass
 class BaffleConfig:
@@ -164,8 +172,8 @@ class BaffleManager:
             depth = self.config.baffle_depth
             print(f"Warning: Invalid depth value for {obj.Id}, using default: {depth}")
         
-        centerline = pjct.BaffleCenterline(
-            name=f"Centerline {pjct_utils.alpha[index].upper()}",
+        centerline = pjct.Project.BaffleCenterline(
+            name=f"Centerline {pjct.Utils.alpha[index].upper()}",
             centerline=obj,
             max_baffle_length=self.config.max_baffle_length,
             depth=depth,
@@ -228,7 +236,6 @@ class BaffleManager:
         group_name = "plate_withGrippers"
         gripper_group = sc.doc.Groups.FindName(group_name)
         if (gripper_group):
-            import flow_form as pjct
             pjct.Utils.delete_group_items(group_name)
             sc.doc.Groups.Delete(gripper_group)
 
@@ -251,7 +258,6 @@ class BaffleManager:
         baffle_group = sc.doc.Groups.FindName(group_name)
         
         if baffle_group:
-            import flow_form as pjct
             pjct.Utils.delete_group_items(group_name)
             sc.doc.Groups.Delete(baffle_group)
             

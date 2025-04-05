@@ -1,50 +1,50 @@
 [
     {
         "baffle_name": "Centerline A - Baffle 0",
-        "baffle_length": 1034.48,
-        "centerline_id": "76e2e2e2-329a-4b81-a4a2-9f560e426318",
-        "baffle_type": "NurbsCurve"
+        "baffle_length": 1798.07,
+        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
+        "baffle_type": "PolyCurve"
     },
     {
         "baffle_name": "Centerline A - Baffle 1",
-        "baffle_length": 1058.58,
-        "centerline_id": "76e2e2e2-329a-4b81-a4a2-9f560e426318",
-        "baffle_type": "PolyCurve"
+        "baffle_length": 2767.75,
+        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
+        "baffle_type": "NurbsCurve"
     },
     {
         "baffle_name": "Centerline A - Baffle 2",
-        "baffle_length": 765.9,
-        "centerline_id": "76e2e2e2-329a-4b81-a4a2-9f560e426318",
-        "baffle_type": "NurbsCurve"
+        "baffle_length": 969.58,
+        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
+        "baffle_type": "PolyCurve"
     },
     {
         "baffle_name": "Centerline A - Baffle 3",
-        "baffle_length": 2267.59,
-        "centerline_id": "76e2e2e2-329a-4b81-a4a2-9f560e426318",
-        "baffle_type": "PolyCurve"
+        "baffle_length": 1257.88,
+        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
+        "baffle_type": "NurbsCurve"
     },
     {
         "baffle_name": "Centerline A - Baffle 4",
-        "baffle_length": 987.14,
-        "centerline_id": "76e2e2e2-329a-4b81-a4a2-9f560e426318",
-        "baffle_type": "NurbsCurve"
-    },
-    {
-        "baffle_name": "Centerline A - Baffle 5",
-        "baffle_length": 818.99,
-        "centerline_id": "76e2e2e2-329a-4b81-a4a2-9f560e426318",
+        "baffle_length": 903.41,
+        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
         "baffle_type": "PolyCurve"
     },
     {
-        "baffle_name": "Centerline A - Baffle 6",
-        "baffle_length": 1587.0,
-        "centerline_id": "76e2e2e2-329a-4b81-a4a2-9f560e426318",
+        "baffle_name": "Centerline A - Baffle 5",
+        "baffle_length": 2466.2,
+        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
         "baffle_type": "NurbsCurve"
     },
     {
+        "baffle_name": "Centerline A - Baffle 6",
+        "baffle_length": 1587.32,
+        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
+        "baffle_type": "PolyCurve"
+    },
+    {
         "baffle_name": "Centerline A - Baffle 7",
-        "baffle_length": 1596.32,
-        "centerline_id": "76e2e2e2-329a-4b81-a4a2-9f560e426318",
+        "baffle_length": 1723.6,
+        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
         "baffle_type": "NurbsCurve"
     },
     {
@@ -93,54 +93,6 @@
         "baffle_name": "Centerline B - Baffle 7",
         "baffle_length": 1723.6,
         "centerline_id": "34fa582a-0f25-4c94-9bf6-446688d28cbf",
-        "baffle_type": "NurbsCurve"
-    },
-    {
-        "baffle_name": "Centerline C - Baffle 0",
-        "baffle_length": 1798.07,
-        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
-        "baffle_type": "PolyCurve"
-    },
-    {
-        "baffle_name": "Centerline C - Baffle 1",
-        "baffle_length": 2767.75,
-        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
-        "baffle_type": "NurbsCurve"
-    },
-    {
-        "baffle_name": "Centerline C - Baffle 2",
-        "baffle_length": 969.58,
-        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
-        "baffle_type": "PolyCurve"
-    },
-    {
-        "baffle_name": "Centerline C - Baffle 3",
-        "baffle_length": 1257.88,
-        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
-        "baffle_type": "NurbsCurve"
-    },
-    {
-        "baffle_name": "Centerline C - Baffle 4",
-        "baffle_length": 903.41,
-        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
-        "baffle_type": "PolyCurve"
-    },
-    {
-        "baffle_name": "Centerline C - Baffle 5",
-        "baffle_length": 2466.2,
-        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
-        "baffle_type": "NurbsCurve"
-    },
-    {
-        "baffle_name": "Centerline C - Baffle 6",
-        "baffle_length": 1587.32,
-        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
-        "baffle_type": "PolyCurve"
-    },
-    {
-        "baffle_name": "Centerline C - Baffle 7",
-        "baffle_length": 1723.6,
-        "centerline_id": "e7e7cb90-7156-43a1-9b7d-90dd0bbfd155",
         "baffle_type": "NurbsCurve"
     }
 ]

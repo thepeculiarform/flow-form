@@ -6,7 +6,10 @@ import psutil
 import os
 import System
 import time
+import polars as pl
 
+
+import flow_form as pjct
 
 # Set Rhino document context at module level
 sc.doc = rh.RhinoDoc.ActiveDoc
@@ -251,95 +254,105 @@ def update_object_usertext(obj_id, property_name, value):
         return False
 
 def process_baffle_edits():
-    """Process edits from Streamlit and update Rhino objects"""
-    # Use consistent path handling
-    project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-    edits_file = os.path.join(project_root, "code", "data", "baffle_edits_in.json")
-    print(f"Checking for edits file: {edits_file}")
-    
+    """Process edits from Streamlit and update the 'depth' UserText field of Rhino objects"""
+    edits_file = get_data_path("baffle_edits_in.json")  # Use consistent path resolution
     if os.path.exists(edits_file):
         try:
+            # Read edits from the JSON file
             with open(edits_file, 'r') as f:
                 edits = json.load(f)
-                print(f"Loaded edits from file:")
-                print(json.dumps(edits, indent=2))
-                
-                for edit in edits:
-                    guid_str = edit['guid']
-                    try:
-                        # Convert string GUID to System.Guid
-                        guid = System.Guid.Parse(guid_str)
-                        # Verify object exists before update
-                        obj = sc.doc.Objects.Find(guid)
-                        if obj:
-                            print(f"Found object {guid_str}")
-                            if update_object_usertext(
-                                guid,  # Now passing System.Guid object
-                                edit['property'],
-                                edit['value']
-                            ):
-                                print(f"Successfully updated {guid_str}")
-                            else:
-                                print(f"Failed to update {guid_str}")
-                        else:
-                            print(f"Object not found: {guid_str}")
-                    except System.ArgumentNullException:
-                        print(f"Invalid GUID format: {guid_str}")
-                        
-            os.remove(edits_file)  # Clear processed edits
+            
+            # Apply each edit
+            for edit in edits:
+                guid = System.Guid.Parse(edit['guid'])  # Parse the GUID
+                obj = sc.doc.Objects.Find(guid)  # Find the Rhino object by GUID
+                if obj:
+                    # Update the 'depth' field in UserText
+                    if edit['property'] == 'depth':
+                        obj.Attributes.SetUserString('depth', str(edit['value']))
+                        obj.CommitChanges()  # Commit changes to the Rhino document
+                        print(f"Updated depth for object {guid} to {edit['value']}")
+            
+            # Remove the edits file after processing
+            os.remove(edits_file)
             return True
         except Exception as e:
             print(f"Error processing edits: {e}")
-            import traceback
-            traceback.print_exc()
             return False
     return False
 
 
+def get_baffle_data(centerline_layer, default_depth=1000.0):
+    """Collects current baffle data from BaffleCenterline objects and writes it as a Polars DataFrame to JSON"""
+    data_path = get_data_path("baffle_data.json")
+    print(f"Data path resolved to: {data_path}")  # Debug print
+
+    try:
+        # Get the centerline layer
+        layer_index = sc.doc.Layers.Find(centerline_layer, True)
+        if layer_index == -1:
+            print(f"Error: Layer '{centerline_layer}' not found.")
+            return pl.DataFrame()
+
+        # Get all objects on the centerline layer
+        layer_objects = sc.doc.Objects.FindByLayer(sc.doc.Layers[layer_index])
+        baffle_data_list = []
+
+        # Process each centerline object
+        for i, obj in enumerate(layer_objects):
+            if isinstance(obj.Geometry, rg.Curve):  # Ensure the object is a curve
+                # Create a BaffleCenterline instance
+                centerline_name = f"BaffleCenterline_{i + 1}"
+                depth = obj.Attributes.GetUserString("depth")
+                depth = float(depth) if depth else default_depth
+
+                baffle_centerline = pjct.Project.BaffleCenterline(
+                    name=centerline_name,
+                    centerline=obj,
+                    depth=depth
+                )
+
+                # Process each Baffle associated with the BaffleCenterline
+                for baffle in baffle_centerline.baffles:
+                    baffle_data_list.append({
+                        "length": round(baffle.baffle_curve.GetLength(), 2),
+                        "depth": baffle.depth,
+                        "name": baffle.name,
+                        "parent_centerline_name": baffle.baffle_centerline.name,
+                        "parent_centerline_guid": str(obj.Id),  # Add GUID of the parent centerline
+                        "parent_centerline_object": baffle.baffle_centerline  # Keep Python object in DataFrame
+                    })
+
+        # Create Polars DataFrame
+        if baffle_data_list:
+            baffle_df = pl.DataFrame(baffle_data_list)
+            os.makedirs(os.path.dirname(data_path), exist_ok=True)  # Ensure directory exists
+
+            # Write only serializable columns to JSON
+            baffle_df.select(["length", "depth", "name", "centerline_name", "centerline_guid"]).write_json(data_path, row_oriented=True)
+            print(f"Baffle data written to {data_path}")
+            return baffle_df
+        else:
+            # Write an empty JSON file if no data is found
+            with open(data_path, 'w') as f:
+                json.dump([], f)
+            print(f"No baffle data found. Empty JSON written to {data_path}")
+            return pl.DataFrame()
+    except Exception as e:
+        print(f"Error collecting baffle data: {e}")
+        return pl.DataFrame()
+
+
+def get_project_root():
+    """Returns the root directory of the project"""
+    return os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+
+def get_data_path(filename):
+    """Returns the full path to a file in the data directory"""
+    project_root = get_project_root()
+    return os.path.join(project_root, "code", "data", filename)
+
+
 class DataOutput:
     pass
-
-# from .websocket_server import BaffleWebsocketServer
-
-# class BaffleManager:
-#     def __init__(self, port=8765):
-#         """Initialize BaffleManager with optional port
-#         Args:
-#             port (int): Port number for WebSocket server (default: 8765)
-#         """
-#         self.ws_server = BaffleWebsocketServer(port=port)
-#         self._is_running = False
-        
-#     @property
-#     def is_running(self):
-#         return self._is_running
-        
-#     def start(self):
-#         """Start the WebSocket server"""
-#         success = self.ws_server.start_server()
-#         if success:
-#             self._is_running = True
-#         return success
-        
-#     def stop(self):
-#         """Stop the WebSocket server"""
-#         self.ws_server.stop_server()
-#         self._is_running = False
-        
-#     def process_edits(self):
-#         """Process any pending edits from WebSocket queue"""
-#         while not self.ws_server.message_queue.empty():
-#             edit = self.ws_server.message_queue.get()
-#             if edit.get('type') == 'edit':
-#                 guid = System.Guid.Parse(edit['guid'])
-#                 update_object_usertext(guid, edit['property'], edit['value'])
-                
-#     def broadcast_update(self, data):
-#         """Send updates to Streamlit clients"""
-#         asyncio.run(self.ws_server.broadcast_updates({
-#             'type': 'update',
-#             'data': data
-#         }))
-
-
 

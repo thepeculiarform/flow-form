@@ -82,7 +82,7 @@ class BaffleCenterline:
         baffle_listing = []
 
         # Filter valid baffle curves
-        baffle_curves = [crv for crv in self.get_inset_lines() if type(crv) == rg.LineCurve or rg.ArcCurve]
+        baffle_curves = self.get_inset_lines()  # Avoid recursion by not calling self.baffles here
 
         # Create Baffle objects
         for i, baffle_curve in enumerate(baffle_curves):
@@ -93,7 +93,6 @@ class BaffleCenterline:
         # Store in cache
         self._baffle_cache = baffle_listing
         return baffle_listing
-    
 
 
 
