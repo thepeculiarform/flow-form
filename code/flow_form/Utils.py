@@ -163,8 +163,11 @@ def manage_streamlit_server(action="start", port=8501):
 
 def manage_fastapi_server(action="start", port=8000):
     """Manages the FastAPI server process"""
-    # Get Rhino Python executable
-    rhino_python = r"C:\Users\jason\.rhinocode\py39-rh8\python.exe"
+    # Get Rhino Python executable dynamically
+    rhino_python = get_rhino_python_path()
+    if not rhino_python:
+        print("Error: Could not determine Rhino Python path. Aborting FastAPI server management.")
+        return False
     
     project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
     interface_dir = os.path.join(project_root, "code", "interface")
@@ -353,6 +356,25 @@ def get_data_path(filename):
     return os.path.join(project_root, "code", "data", filename)
 
 
+def get_rhino_python_path():
+    """Returns the dynamically determined path to the Rhino 8 Python executable"""
+    user_profile = os.getenv('USERPROFILE')
+    if not user_profile:
+        print("Error: USERPROFILE environment variable not found.")
+        # Consider raising an exception or returning a more specific error
+        return None 
+    
+    # Construct the path using os.path.join for cross-platform compatibility (though targeting Windows here)
+    rhino_python_path = os.path.join(user_profile, '.rhinocode', 'py39-rh8', 'python.exe')
+    
+    # Optional: Check if the path actually exists
+    if not os.path.exists(rhino_python_path):
+        print(f"Warning: Rhino Python executable not found at expected path: {rhino_python_path}")
+        # Depending on requirements, you might return None or the path anyway
+        # return None 
+    
+    return rhino_python_path
+
+
 class DataOutput:
     pass
-

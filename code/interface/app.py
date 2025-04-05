@@ -166,6 +166,8 @@ if st.session_state.last_read_time > 0:
 else: st.sidebar.write("Status: Waiting for data file...")
 
 
+## -- UI Elements -- ##
+
 # Display and Edit Data
 st.header("Baffle Data")
 
