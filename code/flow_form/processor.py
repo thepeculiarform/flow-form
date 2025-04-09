@@ -6,13 +6,6 @@ import numpy as np
 import json
 import os
 import polars as pl
-from System import Guid
-
-import flow_form as pjct
-
-
-import sys
-sys.path.append(project_library_path)
 
 import flow_form as pjct
 
@@ -26,15 +19,15 @@ class BaffleConfig:
     baffle_depth: float
     max_baffle_length: float
     thickness: float
-    project_root: str = r"E:/Projects/tpf/rhino/flow_form/code"
+    data_path: str
     
     @property
     def data_file_out(self) -> str:
-        return os.path.join(self.project_root, "data", "baffle_data_out.json")
+        return os.path.join(self.data_path, "data", "baffle_data_out.json")
         
     @property
     def edits_file_in(self) -> str:
-        return os.path.join(self.project_root, "data", "baffle_edits_in.json")
+        return os.path.join(self.data_path, "data", "baffle_edits_in.json")
 
 class BaffleManager:
     """Manages baffle processing and Rhino interactions"""
@@ -127,7 +120,7 @@ class BaffleManager:
             if not all([guid_str, depth is not None]):
                 return False
                 
-            obj = sc.doc.Objects.FindId(Guid(guid_str))
+            obj = sc.doc.Objects.FindId(guid_str)
             if not (obj and obj.IsValid):
                 return False
                 

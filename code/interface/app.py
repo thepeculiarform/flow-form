@@ -11,6 +11,8 @@ import requests
 project_root = r"e:/Projects/tpf/rhino/flow_form" # Use raw string for Windows paths
 DATA_FILE_OUT = os.path.join(project_root, "code", "data", "baffle_data_out.json") # Data coming from Grasshopper
 EDITS_FILE_IN = os.path.join(project_root, "code", "data", "baffle_edits_in.json") # Edits going to Grasshopper
+API_URL = "http://127.0.0.1:8000"
+
 
 # --- File Handling ---
 def read_data_file(filepath):
@@ -74,7 +76,7 @@ def on_property_change():
 
 
 
-API_URL = "http://127.0.0.1:8000"
+
 
 def fetch_baffle_data():
     """Fetch baffle data from FastAPI"""
