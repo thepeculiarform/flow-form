@@ -36,8 +36,8 @@ class BaffleCenterline:
     def get_offset(self, offset):   
         # Generate parallel offset curves on both sides of centerline
         return [
-            self.centerline.Geometry.Offset(rg.Plane.WorldXY, sign * (offset/2), 0.001, rg.CurveOffsetCornerStyle.NONE)[0] 
-            for sign in (-1, 1)
+            self.centerline.Geometry.Offset(rg.Plane.WorldXY, num * (offset/2), 0.001, rg.CurveOffsetCornerStyle.NONE)[0] 
+            for num in (-1, 1)
         ]
 
     def get_arcs(self):
@@ -70,8 +70,6 @@ class BaffleCenterline:
         return hanging_points
 
 
-
-
     @property
     def baffles(self):
         # Use cache if available
@@ -93,8 +91,6 @@ class BaffleCenterline:
         # Store in cache
         self._baffle_cache = baffle_listing
         return baffle_listing
-
-
 
 
     def get_connection_lines(self):
@@ -214,12 +210,6 @@ class Baffle:
         ) for i in range(self.strut_count+1)]
 
         return planes
-
-
-
-
-
-
 
 
 
