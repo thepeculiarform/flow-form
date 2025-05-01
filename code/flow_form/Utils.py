@@ -250,6 +250,7 @@ def update_object_usertext(obj_id, property_name, value):
         if obj:
             obj.Attributes.SetUserString(property_name, str(value))
             obj.CommitChanges()
+            sc.doc.Views.Redraw()
             return True
         return False
     except Exception as e:
@@ -365,7 +366,7 @@ def get_rhino_python_path():
         return None 
     
     # Construct the path using os.path.join for cross-platform compatibility (though targeting Windows here)
-    rhino_python_path = os.path.join(user_profile, '.rhinocode', 'py39-rh8', 'python.exe')
+    rhino_python_path = os.path.join(user_profile, '.rhinocode', 'py39-rh8', 'pythonw.exe')
     
     # Optional: Check if the path actually exists
     if not os.path.exists(rhino_python_path):
