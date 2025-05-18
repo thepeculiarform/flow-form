@@ -1,3 +1,3 @@
-from . import Project
-from . import Utils
+from . import project
+from . import utils
 from . import processor

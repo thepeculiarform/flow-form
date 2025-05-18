@@ -57,7 +57,7 @@
 
 ### v0.2.2 - 2025-01-02
 <a name="v0.2.2"></a>
-- build project classes in modules in <project_name>/code/python/impact
+- build project classes in modules in <project_name>/code/<project_name>/
 - set project structure as standard
 - begin first re-write of python component code to python library code
 

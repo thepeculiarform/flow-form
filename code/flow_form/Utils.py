@@ -310,7 +310,7 @@ def get_baffle_data(centerline_layer, default_depth=1000.0):
                 depth = obj.Attributes.GetUserString("depth")
                 depth = float(depth) if depth else default_depth
 
-                baffle_centerline = pjct.Project.BaffleCenterline(
+                baffle_centerline = pjct.project.BaffleCenterline(
                     name=centerline_name,
                     centerline=obj,
                     depth=depth

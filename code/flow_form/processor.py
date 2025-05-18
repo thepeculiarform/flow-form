@@ -165,8 +165,8 @@ class BaffleManager:
             depth = self.config.baffle_depth
             print(f"Warning: Invalid depth value for {obj.Id}, using default: {depth}")
         
-        centerline = pjct.Project.BaffleCenterline(
-            name=f"Centerline {pjct.Utils.alpha[index].upper()}",
+        centerline = pjct.project.BaffleCenterline(
+            name=f"Centerline {pjct.utils.alpha[index].upper()}",
             centerline=obj,
             max_baffle_length=self.config.max_baffle_length,
             depth=depth,
@@ -229,7 +229,7 @@ class BaffleManager:
         group_name = "plate_withGrippers"
         gripper_group = sc.doc.Groups.FindName(group_name)
         if (gripper_group):
-            pjct.Utils.delete_group_items(group_name)
+            pjct.utils.delete_group_items(group_name)
             sc.doc.Groups.Delete(gripper_group)
 
         gripper_group = sc.doc.Groups.Add(group_name)
@@ -251,7 +251,7 @@ class BaffleManager:
         baffle_group = sc.doc.Groups.FindName(group_name)
         
         if baffle_group:
-            pjct.Utils.delete_group_items(group_name)
+            pjct.utils.delete_group_items(group_name)
             sc.doc.Groups.Delete(baffle_group)
             
         baffle_group = sc.doc.Groups.Add(group_name)
