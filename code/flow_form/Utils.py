@@ -268,7 +268,7 @@ def process_baffle_edits():
             
             # Apply each edit
             for edit in edits:
-                guid = System.Guid.Parse(edit['guid'])  # Parse the GUID
+                guid = edit['guid']  # Parse the GUID
                 obj = sc.doc.Objects.Find(guid)  # Find the Rhino object by GUID
                 if obj:
                     # Update the 'depth' field in UserText
